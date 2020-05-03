@@ -5,14 +5,12 @@
  */
 package listas.atividade.estruturadedados.uam.lists;
 
-import listas.atividade.estruturadedados.uam.lists.array.SimpleList;
-
 /**
  * @author NycolasVieira
  * @param <T>
  */
 public interface ISimpleList<T> {    
-    public boolean isEmpty(SimpleList array);
+    public boolean isEmpty();
     
     public T insert(T elem);
     

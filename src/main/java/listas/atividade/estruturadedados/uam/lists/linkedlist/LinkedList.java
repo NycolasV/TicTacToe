@@ -27,6 +27,10 @@ public class LinkedList<T> implements ILinkedList<T>{
 
     @Override
     public Node insertLast(T elem) {
+        if(isEmpty()){
+            return insertStart(elem);
+        }
+        
         for (var node = start; node != null; node = node.getNext()) {
             if(node.getNext() == null){
                 Node newNode = new Node(elem);

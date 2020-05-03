@@ -22,7 +22,7 @@ public class PlayerController {
 
         for (var player : players.getAllValues()) {
             if (name.equals(player.getName())) {
-                throw new Exception("Name already exists");
+                throw new Exception("Name already exists, try another one");
             }
         }
         
@@ -31,20 +31,30 @@ public class PlayerController {
         return player;
     }
 
-    public void SetNewMovement(String movement, Player currentPlayer) {
+    public boolean SetNewMovement(String movement, Player currentPlayer) {
         if (isEmpty(movement) || currentPlayer == null) {
-            return;
+            return false;
         }
 
         for (var player : players.getAllValues()) {
             for (var move : player.getMovements()) {
-                if (move.equals(movement)) {
-                    return;
+                if (movement.equals(move)) {
+                    return false;
                 }
             }
         }
 
         currentPlayer.setMovement(movement);
+        return true;
+    }
+    
+    public boolean RemoveMovement(String movement, Player currentPlayer) {
+        if (isEmpty(movement) || currentPlayer == null) {
+            return false;
+        }
+
+        currentPlayer.removeMovement(movement);
+        return true;
     }
 
     public String[] GetAllMovement(Player currentPlayer) {
@@ -80,7 +90,7 @@ public class PlayerController {
             throw new Exception("List is empty");
         
         for(var player : this.players.getAllValues()){
-            if(player.getName().equals(name)){
+            if(name.equals(player.getName())){
                 return player;
             }
         }
