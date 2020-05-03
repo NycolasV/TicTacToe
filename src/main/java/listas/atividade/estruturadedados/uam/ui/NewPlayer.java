@@ -26,6 +26,7 @@ public class NewPlayer extends javax.swing.JFrame {
         PlayerName = new javax.swing.JTextField();
         CreatePlayerButton = new javax.swing.JButton();
         ErrorPlayerName = new javax.swing.JLabel();
+        CloseGame = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,14 +50,17 @@ public class NewPlayer extends javax.swing.JFrame {
             }
         });
 
+        CloseGame.setText("Fechar");
+        CloseGame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CloseGameActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(157, 157, 157)
-                .addComponent(CreatePlayerButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(125, 125, 125)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -64,6 +68,12 @@ public class NewPlayer extends javax.swing.JFrame {
                     .addComponent(PlayerName, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
                     .addComponent(PlayerNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(130, 130, 130))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(157, 157, 157)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(CreatePlayerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(CloseGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -76,7 +86,9 @@ public class NewPlayer extends javax.swing.JFrame {
                 .addComponent(ErrorPlayerName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(CreatePlayerButton)
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CloseGame)
+                .addContainerGap(102, Short.MAX_VALUE))
         );
 
         PlayerNameLabel.getAccessibleContext().setAccessibleName("PlayerNameLabel");
@@ -93,8 +105,8 @@ public class NewPlayer extends javax.swing.JFrame {
         try {
             var player = controller.CreatePlayer(PlayerName.getText());
             
-            this.setVisible(false);
             new Game(player, controller).setVisible(true);
+            this.dispose();
         } catch (Exception ex) {
             ErrorPlayerName.setVisible(true);
             ErrorPlayerName.setForeground(Color.red);
@@ -107,6 +119,10 @@ public class NewPlayer extends javax.swing.JFrame {
             CreatePlayerButton.doClick();
         }
     }//GEN-LAST:event_PlayerNameKeyPressed
+
+    private void CloseGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseGameActionPerformed
+        dispose();
+    }//GEN-LAST:event_CloseGameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -144,6 +160,7 @@ public class NewPlayer extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton CloseGame;
     private javax.swing.JButton CreatePlayerButton;
     private javax.swing.JLabel ErrorPlayerName;
     private javax.swing.JTextField PlayerName;

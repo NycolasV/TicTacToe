@@ -10,7 +10,7 @@ import listas.atividade.estruturadedados.uam.models.Player;
  * @author NycolasVieira
  */
 public class GameController {
-    
+
     PlayerController controller;
     Player humanPlayer;
     Player machinePlayer;
@@ -18,9 +18,15 @@ public class GameController {
     public GameController(PlayerController controller, Player player) throws Exception {
         this.controller = controller;
         this.humanPlayer = player;
+        this.machinePlayer = controller.CreatePlayer("Computador");
+    }
 
-        var machinePlayer = this.controller.CreatePlayer("Computador");
-        this.machinePlayer = machinePlayer;
+    public String GetHumanPlayerName() {
+        return humanPlayer.getName();
+    }
+    
+    public String GetMachinePlayerName() {
+        return machinePlayer.getName();
     }
     
     public int setMovement(String movement, JButton Box) {
@@ -42,27 +48,21 @@ public class GameController {
         } catch (HeadlessException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
-        
+
         return 0;
     }
 
     public int machineMovement() {
         Random randomInt = new Random();
-        
-        int chosen;
-        int tentatives = 0;
+
+        int chosen = 0;
         boolean result;
-        
+
         do {
             chosen = randomInt.nextInt((9 - 1) + 1) + 1;
-            result = controller.SetNewMovement("b" + chosen, machinePlayer);           
-            tentatives++;
-        } while (!result && tentatives < 9);
+            result = controller.SetNewMovement("b" + chosen, machinePlayer);
+        } while (!result);
 
-        if(tentatives >= 8){
-            chosen = 0;
-        }
-        
         return chosen;
     }
 }
