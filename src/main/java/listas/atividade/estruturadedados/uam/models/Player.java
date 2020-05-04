@@ -11,7 +11,7 @@ public class Player {
 
     private long score;
 
-    private final SimpleList<String> movements;
+    private SimpleList<String> movements;
 
     public Player(String name) {
         this.name = name;
@@ -46,7 +46,11 @@ public class Player {
         this.movements.insert(movement);
     }
     
-    public void removeMovement(String movement) {       
+    public void removeMovement(String movement) {
         this.movements.remove(movement);
+    }
+    
+    public void restarMovements() {
+        this.movements = new SimpleList<>(String.class);
     }
 }

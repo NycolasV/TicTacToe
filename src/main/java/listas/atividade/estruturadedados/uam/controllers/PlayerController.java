@@ -15,7 +15,7 @@ public class PlayerController {
         this.players = new LinkedList();
     }
 
-    public Player CreatePlayer(String name) throws Exception {
+    public Player createPlayer(String name) throws Exception {
         if (isEmpty(name)) {
             throw new Exception("Name cannot be empty");
         }
@@ -25,79 +25,92 @@ public class PlayerController {
                 throw new Exception("Name already exists, try another one");
             }
         }
-        
+
         Player player = new Player(name);
         players.insertLast(player);
         return player;
     }
 
-    public boolean SetNewMovement(String movement, Player currentPlayer) {
-        if (isEmpty(movement) || currentPlayer == null) {
+    public boolean setNewMovement(String movement, Player player) {
+        if (isEmpty(movement) || player == null) {
             return false;
         }
 
-        for (var player : players.getAllValues()) {
-            for (var move : player.getMovements()) {
+        for (var anotherPlayer : players.getAllValues()) {
+            for (var move : anotherPlayer.getMovements()) {
                 if (movement.equals(move)) {
                     return false;
                 }
             }
         }
 
-        currentPlayer.setMovement(movement);
+        player.setMovement(movement);
         return true;
     }
-    
-    public boolean RemoveMovement(String movement, Player currentPlayer) {
-        if (isEmpty(movement) || currentPlayer == null) {
+
+    public String[] getAllMovement(Player player) {
+        if (player == null) {
+            return null;
+        }
+
+        return player.getMovements();
+    }
+
+    public boolean removeMovement(String movement, Player player) {
+        if (isEmpty(movement) || player == null) {
             return false;
         }
 
-        currentPlayer.removeMovement(movement);
+        player.removeMovement(movement);
         return true;
     }
 
-    public String[] GetAllMovement(Player currentPlayer) {
-        if(currentPlayer == null)
-            return null;
-        
-        return currentPlayer.getMovements();
-    }
-    
-    public void setScore(long point, Player currentPlayer){
-        if(point <= 0 || currentPlayer == null)
+    public void removeAllMovement(Player player) {
+        if (player == null) {
             return;
-        
-        currentPlayer.setScore(point);
-    }
-    
-    public void getScore(Player currentPlayer){
-        if(currentPlayer == null)
-            return;
-        
-        currentPlayer.getScore();
+        }
+
+        player.restarMovements();
     }
 
-    public ArrayList<Player> getPlayerList() throws Exception{
-        if(this.players.isEmpty())
+    public void setScore(long point, Player player) {
+        if (point <= 0 || player == null) {
+            return;
+        }
+
+        player.setScore(point);
+    }
+
+    public void getScore(Player player) {
+        if (player == null) {
+            return;
+        }
+
+        player.getScore();
+    }
+
+    public ArrayList<Player> getPlayerList() throws Exception {
+        if (this.players.isEmpty()) {
             throw new Exception("List is empty");
-        
+        }
+
         return players.getAllValues();
     }
-    
-    public Player getPlayer(String name) throws Exception{
-        if(this.players.isEmpty() || isEmpty(name))
+
+    public Player getPlayer(String name) throws Exception {
+        if (this.players.isEmpty() || isEmpty(name)) {
             throw new Exception("List is empty");
-        
-        for(var player : this.players.getAllValues()){
-            if(name.equals(player.getName())){
+        }
+
+        for (var player : this.players.getAllValues()) {
+            if (name.equals(player.getName())) {
                 return player;
             }
         }
-        
+
         return null;
     }
-    
+
     private boolean isEmpty(final String s) {
         return s == null || s.trim().isEmpty();
     }

@@ -103,7 +103,7 @@ public class NewPlayer extends javax.swing.JFrame {
 
     private void CreatePlayerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreatePlayerButtonActionPerformed
         try {
-            var player = controller.CreatePlayer(PlayerName.getText());
+            var player = controller.createPlayer(PlayerName.getText());
             
             new Game(player, controller).setVisible(true);
             this.dispose();

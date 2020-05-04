@@ -7,20 +7,22 @@ import listas.atividade.estruturadedados.uam.models.Player;
  * @author NycolasVieira
  */
 public class Game extends javax.swing.JFrame {
-    
+
     GameController controller;
-    
+
     public Game() {
         initComponents();
     }
 
     public Game(Player player, PlayerController controller) throws Exception {
         initComponents();
-        
+
+        RestartButton.setVisible(false);
+
         this.controller = new GameController(controller, player);
-        
-        HumanPlayerName.setText(this.controller.GetHumanPlayerName());
-        MachinePlayerName.setText(this.controller.GetMachinePlayerName());
+
+        HumanPlayerName.setText(this.controller.getHumanPlayerName());
+        MachinePlayerName.setText(this.controller.getMachinePlayerName());
     }
 
     @SuppressWarnings("unchecked")
@@ -44,7 +46,8 @@ public class Game extends javax.swing.JFrame {
         HumanPlayerPontuation = new javax.swing.JLabel();
         MachinePlayerPontuation = new javax.swing.JLabel();
         CloseGameButton = new javax.swing.JButton();
-        RestartGame = new javax.swing.JButton();
+        BackButton = new javax.swing.JButton();
+        RestartButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -161,10 +164,17 @@ public class Game extends javax.swing.JFrame {
             }
         });
 
-        RestartGame.setText("Reiniciar");
-        RestartGame.addActionListener(new java.awt.event.ActionListener() {
+        BackButton.setText("Voltar");
+        BackButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RestartGameActionPerformed(evt);
+                BackButtonActionPerformed(evt);
+            }
+        });
+
+        RestartButton.setText("Reiniciar");
+        RestartButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RestartButtonActionPerformed(evt);
             }
         });
 
@@ -193,12 +203,15 @@ public class Game extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(Box3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(Box7, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(Box8, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(RestartGame))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(BackButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(RestartButton)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(Box9, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -230,7 +243,9 @@ public class Game extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(CloseGameButton)
-                    .addComponent(RestartGame))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(BackButton)
+                        .addComponent(RestartButton)))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
@@ -239,73 +254,73 @@ public class Game extends javax.swing.JFrame {
 
     private void Box1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Box1ActionPerformed
         var movement = "b1";
-        
+
         var result = controller.setMovement(movement, Box1);
-        
+
         SetMachinePlay(result);
     }//GEN-LAST:event_Box1ActionPerformed
 
     private void Box2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Box2ActionPerformed
         var movement = "b2";
-        
+
         var result = controller.setMovement(movement, Box2);
-        
+
         SetMachinePlay(result);
     }//GEN-LAST:event_Box2ActionPerformed
 
     private void Box3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Box3ActionPerformed
         var movement = "b3";
-        
+
         var result = controller.setMovement(movement, Box3);
-        
+
         SetMachinePlay(result);
     }//GEN-LAST:event_Box3ActionPerformed
 
     private void Box4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Box4ActionPerformed
         var movement = "b4";
-        
+
         var result = controller.setMovement(movement, Box4);
-        
+
         SetMachinePlay(result);
     }//GEN-LAST:event_Box4ActionPerformed
 
     private void Box5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Box5ActionPerformed
         var movement = "b5";
-        
+
         var result = controller.setMovement(movement, Box5);
-        
+
         SetMachinePlay(result);
     }//GEN-LAST:event_Box5ActionPerformed
 
     private void Box6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Box6ActionPerformed
         var movement = "b6";
-        
+
         var result = controller.setMovement(movement, Box6);
-        
+
         SetMachinePlay(result);
     }//GEN-LAST:event_Box6ActionPerformed
 
     private void Box7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Box7ActionPerformed
         var movement = "b7";
-        
+
         var result = controller.setMovement(movement, Box7);
-        
+
         SetMachinePlay(result);
     }//GEN-LAST:event_Box7ActionPerformed
 
     private void Box8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Box8ActionPerformed
         var movement = "b8";
-        
+
         var result = controller.setMovement(movement, Box8);
-        
+
         SetMachinePlay(result);
     }//GEN-LAST:event_Box8ActionPerformed
 
     private void Box9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Box9ActionPerformed
         var movement = "b9";
-        
+
         var result = controller.setMovement(movement, Box9);
-        
+
         SetMachinePlay(result);
     }//GEN-LAST:event_Box9ActionPerformed
 
@@ -313,12 +328,26 @@ public class Game extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_CloseGameButtonActionPerformed
 
-    private void RestartGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RestartGameActionPerformed
+    private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
         new NewPlayer().setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_RestartGameActionPerformed
+    }//GEN-LAST:event_BackButtonActionPerformed
 
-    private void SetMachinePlay(int chosen){
+    private void RestartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RestartButtonActionPerformed
+        controller.restartGame();
+
+        Box1.setText("");
+        Box2.setText("");
+        Box3.setText("");
+        Box4.setText("");
+        Box5.setText("");
+        Box6.setText("");
+        Box7.setText("");
+        Box8.setText("");
+        Box9.setText("");
+    }//GEN-LAST:event_RestartButtonActionPerformed
+
+    private void SetMachinePlay(int chosen) {
         switch ("b" + chosen) {
             case "b1":
                 Box1.setText("O");
@@ -359,8 +388,32 @@ public class Game extends javax.swing.JFrame {
             default:
                 break;
         }
+
+        if (chosen == -1 || chosen == -2) {
+            SetIfWinner(chosen);
+        }
     }
-    
+
+    private void SetIfWinner(int result) {
+        if (result == -1) {
+            var score = controller.getHumanPlayerScore();
+
+            score++;
+            HumanPlayerPontuation.setText(String.valueOf(score));
+
+            controller.setHumanPlayerScore(score);
+        } else if (result == -2) {
+            var score = controller.getMachinePlayerScore();
+
+            score++;
+            MachinePlayerPontuation.setText(String.valueOf(score));
+
+            controller.setMachinePlayerScore(score);
+        }
+
+        RestartButton.setVisible(true);
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -393,6 +446,7 @@ public class Game extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BackButton;
     private javax.swing.JButton Box1;
     private javax.swing.JButton Box2;
     private javax.swing.JButton Box3;
@@ -407,7 +461,7 @@ public class Game extends javax.swing.JFrame {
     private javax.swing.JLabel HumanPlayerPontuation;
     private javax.swing.JLabel MachinePlayerName;
     private javax.swing.JLabel MachinePlayerPontuation;
-    private javax.swing.JButton RestartGame;
+    private javax.swing.JButton RestartButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
