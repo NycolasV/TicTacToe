@@ -13,15 +13,23 @@ import listas.atividade.estruturadedados.uam.models.Player;
  */
 public class GameController {
 
+    public final int CANCEL_MOVEMENT_CODE = 0;
+    public final int HUMAN_VICTORY_CODE = -1;
+    public final int MACHINE_VICTORY_CODE = -2;
+    public final int ENDGAME_CODE = -3;
+    
     private final PlayerController controller;
     private final Player humanPlayer;
     private final Player machinePlayer;
-    private int lastReturn;
-    
-    public GameController(PlayerController controller, Player player) throws Exception {
-        this.lastReturn = 0;
-        this.controller = controller;
-        this.humanPlayer = player;
+    public int humanVictoryValidation;
+    public int machineVictoryValidation;
+
+    public GameController(String name) throws Exception {
+        this.humanVictoryValidation = 0;
+        this.machineVictoryValidation = 0;
+
+        this.controller = new PlayerController();
+        this.humanPlayer = controller.createPlayer(name);
         this.machinePlayer = controller.createPlayer("Computador");
     }
 
@@ -49,37 +57,56 @@ public class GameController {
         machinePlayer.setScore(score);
     }
 
+    public String[] getHumanMovements() {
+        return humanPlayer.getMovements();
+    }
+
+    public String[] getMachineMovements() {
+        return machinePlayer.getMovements();
+    }
+
     public void restartGame() {
-        lastReturn = 0;
+        humanVictoryValidation = 0;
         controller.removeAllMovement(humanPlayer);
+        
+        machineVictoryValidation = 0;
         controller.removeAllMovement(machinePlayer);
     }
 
-    public int setMovement(String movement, JButton Box) {        
+    public int setMovement(String movement, JButton Box) {
         try {
-            if(lastReturn == -1 || lastReturn == -2){
-                JOptionPane.showMessageDialog(null, 
-                        "Jogo encerrado, reinicie-o para continuar", "ERRO", JOptionPane.ERROR_MESSAGE);
-                return -3;
+            if (humanVictoryValidation == -1 || machineVictoryValidation == -2) {
+                if (Box != null) {
+                    JOptionPane.showMessageDialog(null,
+                            "Jogo encerrado, reinicie-o para continuar", "ERRO", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    System.out.println("Jogo encerrado");
+                }
+                
+                return ENDGAME_CODE;
             }
 
-            var result = controller.setNewMovement(movement, humanPlayer);   
-            
+            var result = controller.setNewMovement(movement, humanPlayer);
+
             if (result) {
-                Box.setText("X");
+                if (Box != null) {
+                    Box.setText("X");
+                }
 
                 var confirmPlay = JOptionPane.showConfirmDialog(null, "Confimar movimento");
 
                 if (confirmPlay == JOptionPane.YES_OPTION) {
                     if (validateMovements(humanPlayer)) {
-                        lastReturn = -1;
+                        humanVictoryValidation = HUMAN_VICTORY_CODE;
+                        return HUMAN_VICTORY_CODE;
                     } else {
-                        lastReturn = machineMovement();
+                        return machineMovement();
                     }
-                    
-                    return lastReturn;
                 } else {
-                    Box.setText("");
+                    if (Box != null) {
+                        Box.setText("");
+                    }
+
                     controller.removeMovement(movement, humanPlayer);
                 }
             }
@@ -87,7 +114,7 @@ public class GameController {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
 
-        return 0;
+        return CANCEL_MOVEMENT_CODE;
     }
 
     private int machineMovement() {
@@ -102,10 +129,10 @@ public class GameController {
         } while (!result);
 
         if (validateMovements(machinePlayer)) {
-            return -2;
-        } else {
-            return chosen;
+            machineVictoryValidation = MACHINE_VICTORY_CODE;
         }
+        
+        return chosen;
     }
 
     private boolean validateMovements(Player player) {
@@ -146,7 +173,7 @@ public class GameController {
                 }
             }
         }
-        
+
         if (!result) {
             var allMovements = controller.getAllMovement(humanPlayer).length
                     + controller.getAllMovement(machinePlayer).length;

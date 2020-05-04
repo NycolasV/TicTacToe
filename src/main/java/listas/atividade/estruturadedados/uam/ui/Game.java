@@ -1,7 +1,6 @@
 package listas.atividade.estruturadedados.uam.ui;
 
 import listas.atividade.estruturadedados.uam.controllers.*;
-import listas.atividade.estruturadedados.uam.models.Player;
 
 /**
  * @author NycolasVieira
@@ -14,12 +13,12 @@ public class Game extends javax.swing.JFrame {
         initComponents();
     }
 
-    public Game(Player player, PlayerController controller) throws Exception {
+    public Game(String name) throws Exception {
         initComponents();
 
         RestartButton.setVisible(false);
 
-        this.controller = new GameController(controller, player);
+        this.controller = new GameController(name);
 
         HumanPlayerName.setText(this.controller.getHumanPlayerName());
         MachinePlayerName.setText(this.controller.getMachinePlayerName());
@@ -348,6 +347,9 @@ public class Game extends javax.swing.JFrame {
     }//GEN-LAST:event_RestartButtonActionPerformed
 
     private void SetMachinePlay(int chosen) {
+        if(chosen == controller.ENDGAME_CODE)
+            return;
+        
         switch ("b" + chosen) {
             case "b1":
                 Box1.setText("O");
@@ -389,29 +391,29 @@ public class Game extends javax.swing.JFrame {
                 break;
         }
 
-        if (chosen == -1 || chosen == -2) {
-            SetIfWinner(chosen);
-        }
+        SetIfWinner();
     }
 
-    private void SetIfWinner(int result) {
-        if (result == -1) {
-            var score = controller.getHumanPlayerScore();
+    private void SetIfWinner() {
+        if (controller.humanVictoryValidation == controller.HUMAN_VICTORY_CODE){
+                var score = controller.getHumanPlayerScore();
 
-            score++;
-            HumanPlayerPontuation.setText(String.valueOf(score));
+                score++;
+                HumanPlayerPontuation.setText(String.valueOf(score));
 
-            controller.setHumanPlayerScore(score);
-        } else if (result == -2) {
-            var score = controller.getMachinePlayerScore();
+                controller.setHumanPlayerScore(score);
+                
+                RestartButton.setVisible(true);
+            } else if (controller.machineVictoryValidation == controller.MACHINE_VICTORY_CODE) {
+                var score = controller.getMachinePlayerScore();
 
-            score++;
-            MachinePlayerPontuation.setText(String.valueOf(score));
+                score++;
+                MachinePlayerPontuation.setText(String.valueOf(score));
 
-            controller.setMachinePlayerScore(score);
-        }
-
-        RestartButton.setVisible(true);
+                controller.setMachinePlayerScore(score);
+                
+                RestartButton.setVisible(true);
+            }
     }
 
     public static void main(String args[]) {

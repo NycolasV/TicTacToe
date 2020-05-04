@@ -2,19 +2,15 @@ package listas.atividade.estruturadedados.uam.ui;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
-import listas.atividade.estruturadedados.uam.controllers.PlayerController;
 
 /**
  * @author NycolasVieira
  */
 public class NewPlayer extends javax.swing.JFrame {
 
-    private final PlayerController controller;
-
     public NewPlayer() {
         initComponents();
         
-        controller = new PlayerController();
         ErrorPlayerName.setVisible(false);
     }
 
@@ -102,10 +98,8 @@ public class NewPlayer extends javax.swing.JFrame {
     }//GEN-LAST:event_PlayerNameActionPerformed
 
     private void CreatePlayerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreatePlayerButtonActionPerformed
-        try {
-            var player = controller.createPlayer(PlayerName.getText());
-            
-            new Game(player, controller).setVisible(true);
+        try {            
+            new Game(PlayerName.getText()).setVisible(true);
             this.dispose();
         } catch (Exception ex) {
             ErrorPlayerName.setVisible(true);
