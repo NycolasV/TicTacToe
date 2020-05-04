@@ -50,6 +50,7 @@ public class GameController {
     }
 
     public void restartGame() {
+        lastReturn = 0;
         controller.removeAllMovement(humanPlayer);
         controller.removeAllMovement(machinePlayer);
     }
